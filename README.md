@@ -1,27 +1,26 @@
-# AngularTodoList
+1.建立一個todolist module
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 13.3.4.
+2.建立一個todolist component
 
-## Development server
+3.CLI  import 了 TodoListComponent 進來，並將其加到 TodoListModule 的 Metadata 裡，讓 Angular 知道 TodoListComponent 是 TodoListModule 裡面的
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+4.todo-list.component.ts中的selector會改為app-todo-list 然後去app.component.html中貼上該標籤<app-todo-list></app-todo-list>
 
-## Code scaffolding
+5.會報錯 先確認是不是當前module的一部分
+<app-todo-list></app-todo-list>是放在app.component.html 裡，所以它所屬的 Module 就是 AppModule
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+6.檢查AppModule發現沒引用進來 加入:
+import { TodoListModule } from './todo-list/todo-list.module';
 
-## Build
+在@NgModule內imports加入TodoListModule
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+7.檢查todo-list.moduler發現沒有export
 
-## Running unit tests
+在@NgModule內新增 exports: [TodoListComponent]
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+8.總結 
+在todo-list.component中有<p>todo-list works!</p>
 
-## Running end-to-end tests
+todo-list.module會將TodoListComponent export出去
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.io/cli) page.
+app.module引入TodoListModule之後 在app.component的<app-todo-list></app-todo-list>就可以渲染出<p>todo-list works!</p>
